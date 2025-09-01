@@ -1,2 +1,20 @@
 /* You can add global styles to this file, and also import other style files */
 @import "tailwindcss";
+
+/* Optimizaciones de rendimiento */
+.line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  /* Optimización de transiciones */
+  .transition-shadow {
+    transition: box-shadow 0.3s ease;
+  }
+  
+  /* Optimización de imágenes */
+  img {
+    will-change: transform;
+  }
