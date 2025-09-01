@@ -2,15 +2,21 @@ import { CommonModule } from "@angular/common";
 import { Component, computed, Signal, signal, TrackByFunction } from "@angular/core";
 import { ProductCardComponent } from "../../../shared/components/ui/product-card/product-card.component";
 import { Product } from "../../../shared/interfaces/product.interface";
+import { LucideAngularModule, Shield, Crown, Gem, Star } from 'lucide-angular';
 
 @Component({
   selector: 'products-sections',
   templateUrl: './products-sections.component.html',
-  imports: [CommonModule, ProductCardComponent],
+  imports: [CommonModule, ProductCardComponent, LucideAngularModule],
   standalone: true
 })
 
 export class ProductsSectionsComponent {
+    // Iconos disponibles
+    readonly Shield = Shield;
+    readonly Crown = Crown;
+    readonly Gem = Gem;
+    readonly Star = Star;
     // Tendencias
     private productsSignal: Signal<Product[]> = signal<Product[]>([
     {
