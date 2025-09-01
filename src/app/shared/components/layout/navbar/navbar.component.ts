@@ -1,14 +1,21 @@
 import { Component, computed, signal } from "@angular/core";
 import { CommonModule } from "@angular/common";
+import { LucideAngularModule, Search, ShoppingCart, Menu, ChevronDown, User, Gem } from "lucide-angular";
 
 @Component({
   selector: 'navbar',
   templateUrl: './navbar.component.html',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, LucideAngularModule],
 })
 export class NavbarComponent {
   // ✅ Signals para estado del navbar
+  readonly Search = Search;
+  readonly ShoppingCart = ShoppingCart;
+  readonly Menu = Menu;
+  readonly ChevronDown = ChevronDown;
+  readonly User = User;
+  readonly Gem = Gem;
   readonly isMenuOpen = signal(false);
   readonly cartItemsCount = signal(0);
   readonly isScrolled = signal(false);
