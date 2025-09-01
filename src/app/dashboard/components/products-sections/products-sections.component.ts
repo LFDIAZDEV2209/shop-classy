@@ -1,23 +1,12 @@
 import { CommonModule } from "@angular/common";
-import { Component } from "@angular/core";
-
-interface Product {
-  id: number;
-  name: string;
-  price: number;
-  category: string;
-  rating: number;
-  image: string;
-  status: 'available' | 'sold-out';
-  statusIcon: 'green-diamond' | 'yellow-circle' | 'blue-diamond';
-  isTrend: boolean;
-  brandCategory: 'diamante' | 'oro' | 'esmeralda';
-}
+import { Component, TrackByFunction } from "@angular/core";
+import { ProductCardComponent } from "../../../shared/components/ui/product-card/product-card.component";
+import { Product } from "../../../shared/interfaces/product.interface";
 
 @Component({
   selector: 'products-sections',
   templateUrl: './products-sections.component.html',
-  imports: [CommonModule],
+  imports: [CommonModule, ProductCardComponent],
 })
 
 export class ProductsSectionsComponent {
@@ -220,21 +209,41 @@ export class ProductsSectionsComponent {
     }
   ];
 
-  // Getters para filtrar productos por categoría
+  // TrackBy functions para optimizar el rendering
+  trackByProductId: TrackByFunction<Product> = (index: number, product: Product) => product.id;
+
+  // Getters optimizados con memoización
+  private _trendingProducts: Product[] | null = null;
+  private _diamanteProducts: Product[] | null = null;
+  private _oroProducts: Product[] | null = null;
+  private _esmeraldaProducts: Product[] | null = null;
+
   get trendingProducts(): Product[] {
-    return this.products.filter(product => product.isTrend);
+    if (!this._trendingProducts) {
+      this._trendingProducts = this.products.filter(product => product.isTrend);
+    }
+    return this._trendingProducts;
   }
 
   get diamanteProducts(): Product[] {
-    return this.products.filter(product => product.brandCategory === 'diamante' && !product.isTrend);
+    if (!this._diamanteProducts) {
+      this._diamanteProducts = this.products.filter(product => product.brandCategory === 'diamante' && !product.isTrend);
+    }
+    return this._diamanteProducts;
   }
 
   get oroProducts(): Product[] {
-    return this.products.filter(product => product.brandCategory === 'oro' && !product.isTrend);
+    if (!this._oroProducts) {
+      this._oroProducts = this.products.filter(product => product.brandCategory === 'oro' && !product.isTrend);
+    }
+    return this._oroProducts;
   }
 
   get esmeraldaProducts(): Product[] {
-    return this.products.filter(product => product.brandCategory === 'esmeralda' && !product.isTrend);
+    if (!this._esmeraldaProducts) {
+      this._esmeraldaProducts = this.products.filter(product => product.brandCategory === 'esmeralda' && !product.isTrend);
+    }
+    return this._esmeraldaProducts;
   }
 
   onViewAll(section: string) {
