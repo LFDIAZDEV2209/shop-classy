@@ -1,54 +1,85 @@
-<nav class="bg-transparent absolute top-0 left-0 right-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between items-center h-16">
-        
-        <!-- Left side - Navigation Links -->
-        <div class="flex items-center space-x-8">
-          <a href="#" class="text-white hover:text-pink-400 font-medium transition-colors duration-200">
-            Tienda
-          </a>
-          <a href="#" class="text-white hover:text-pink-400 font-medium transition-colors duration-200">
-            Contacto
-          </a>
-        </div>
-  
-        <!-- Center - Logo -->
-        <div class="flex items-center">
-          <div class="flex items-center space-x-2">
-            <!-- Diamond Icon -->
-            <div class="w-6 h-6 bg-gradient-to-br from-rose-400 to-purple-500 transform rotate-45 rounded-sm"></div>
-            <!-- Logo Text -->
-            <span class="text-2xl font-bold text-white hover:text-pink-400 transition-colors duration-200 cursor-pointer">ShopClassy</span>
-          </div>
-        </div>
-  
-        <!-- Right side - Icons -->
-        <div class="flex items-center space-x-6">
-          <!-- Search Icon -->
-          <button class="text-white hover:text-pink-400 transition-colors duration-200">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-            </svg>
-          </button>
-  
-          <!-- Profile Icon -->
-          <button class="text-white hover:text-pink-400 transition-colors duration-200">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-            </svg>
-          </button>
-  
-          <!-- Shopping Cart Icon with Badge -->
-          <button class="text-white hover:text-pink-400 transition-colors duration-200 relative">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5M7 13l2.5 5m6-5v6a2 2 0 01-2 2H9a2 2 0 01-2-2v-6m8 0V9a2 2 0 00-2-2H9a2 2 0 00-2 2v4.01"></path>
-            </svg>
-            <!-- Cart Badge -->
-            <span class="absolute -top-2 -right-2 bg-rose-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-medium">
-              3
-            </span>
-          </button>
+<nav [class]="'absolute top-0 left-0 right-0 z-50 transition-all duration-300 ' + navbarClasses()">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-16">
+      
+      <!-- Left side - Navigation Links -->
+      <div class="flex items-center space-x-8">
+        <a href="#" class="text-white hover:text-pink-400 font-medium transition-colors duration-200">
+          Tienda
+        </a>
+        <a href="#" class="text-white hover:text-pink-400 font-medium transition-colors duration-200">
+          Contacto
+        </a>
+      </div>
+
+      <!-- Center - Logo -->
+      <div class="flex items-center">
+        <div class="flex items-center space-x-2">
+          <!-- Diamond Icon -->
+          <div class="w-6 h-6 bg-gradient-to-br from-rose-400 to-purple-500 transform rotate-45 rounded-sm"></div>
+          <!-- Logo Text -->
+          <span class="text-2xl font-bold text-white hover:text-pink-400 transition-colors duration-200 cursor-pointer">ShopClassy</span>
         </div>
       </div>
+
+      <!-- Right side - Icons -->
+      <div class="flex items-center space-x-6">
+        <!-- Search Icon -->
+        <button class="text-white hover:text-pink-400 transition-colors duration-200">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+          </svg>
+        </button>
+
+        <!-- Profile Icon -->
+        <button class="text-white hover:text-pink-400 transition-colors duration-200">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+          </svg>
+        </button>
+
+        <!-- Shopping Cart Icon with Badge -->
+        <button class="text-white hover:text-pink-400 transition-colors duration-200 relative">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5M7 13l2.5 5m6-5v6a2 2 0 01-2 2H9a2 2 0 01-2-2v-6m8 0V9a2 2 0 00-2-2H9a2 2 0 00-2 2v4.01"></path>
+          </svg>
+          <!-- Cart Badge - Reactivo -->
+          @if (cartItemsCount() > 0) {
+            <span [class]="'absolute -top-2 -right-2 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-medium transition-colors duration-300 ' + cartBadgeClasses()">
+              {{ cartItemsCount() }}
+            </span>
+          }
+        </button>
+
+        <!-- Mobile Menu Button -->
+        <button 
+          (click)="toggleMenu()"
+          class="md:hidden text-white hover:text-pink-400 transition-colors duration-200">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+        </button>
+      </div>
     </div>
-  </nav>
+
+    <!-- Mobile Menu - Reactivo -->
+    @if (isMenuOpen()) {
+      <div class="md:hidden bg-white shadow-lg rounded-lg mt-2 mx-4">
+        <div class="px-2 pt-2 pb-3 space-y-1">
+          <a href="#" class="block px-3 py-2 text-gray-900 hover:text-pink-600 font-medium transition-colors duration-200">
+            Tienda
+          </a>
+          <a href="#" class="block px-3 py-2 text-gray-900 hover:text-pink-600 font-medium transition-colors duration-200">
+            Contacto
+          </a>
+          <a href="#" class="block px-3 py-2 text-gray-900 hover:text-pink-600 font-medium transition-colors duration-200">
+            Mi Cuenta
+          </a>
+          <a href="#" class="block px-3 py-2 text-gray-900 hover:text-pink-600 font-medium transition-colors duration-200">
+            Carrito ({{ cartItemsCount() }})
+          </a>
+        </div>
+      </div>
+    }
+  </div>
+</nav>

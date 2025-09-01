@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { Component, computed, Signal, signal, TrackByFunction } from "@angular/core";
+import { Component, computed, signal, TrackByFunction } from "@angular/core";
 import { ProductCardComponent } from "../../../shared/components/ui/product-card/product-card.component";
 import { Product } from "../../../shared/interfaces/product.interface";
 import { LucideAngularModule, Shield, Crown, Gem, Star } from 'lucide-angular';
@@ -18,7 +18,7 @@ export class ProductsSectionsComponent {
     readonly Gem = Gem;
     readonly Star = Star;
     // Tendencias
-    private productsSignal: Signal<Product[]> = signal<Product[]>([
+    private readonly productsSignal = signal<Product[]>([
     {
       id: 1,
       name: "Haruni Ginseng Aqua Sun Cream SPF50",
@@ -215,12 +215,6 @@ export class ProductsSectionsComponent {
       brandCategory: "esmeralda"
     }
   ]);
-
-  // Getters optimizados con memoización
-  private _trendingProducts: Product[] | null = null;
-  private _diamanteProducts: Product[] | null = null;
-  private _oroProducts: Product[] | null = null;
-  private _esmeraldaProducts: Product[] | null = null;
 
   // Computed properties optimizadas
   readonly trendingProducts = computed(() => 
