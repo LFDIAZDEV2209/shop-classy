@@ -2,7 +2,7 @@
   <div class="container mx-auto px-4">
     
     <!-- Sección Tendencias -->
-    @if (trendingProducts.length > 0) {
+    @if (trendingProducts().length > 0) {
       <div class="mb-16">
         <!-- Section Header -->
         <div class="flex justify-between items-center mb-12">
@@ -24,7 +24,7 @@
     
         <!-- Products Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          @for (product of trendingProducts; track trackByProductId($index, product)) {
+          @for (product of trendingProducts(); track trackByProductId($index, product)) {
             @defer (on viewport) {
             <product-card [product]="product"></product-card>
             }
@@ -39,7 +39,7 @@
     }
 
     <!-- Sección Diamante -->
-    @if (diamanteProducts.length > 0) {
+    @if (diamanteProducts().length > 0) {
       <div class="mb-16">
         <!-- Section Header -->
         <div class="flex justify-between items-center mb-12">
@@ -61,7 +61,7 @@
     
         <!-- Products Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          @for (product of diamanteProducts; track trackByProductId($index, product)) {
+          @for (product of diamanteProducts(); track trackByProductId($index, product)) {
             @defer (on viewport) {
             <product-card [product]="product"></product-card>
             }
@@ -76,7 +76,7 @@
     }
 
     <!-- Sección Oro -->
-    @if (oroProducts.length > 0) {
+    @if (oroProducts().length > 0) {
       <div class="mb-16">
         <!-- Section Header -->
         <div class="flex justify-between items-center mb-12">
@@ -98,7 +98,7 @@
     
         <!-- Products Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          @for (product of oroProducts; track trackByProductId($index, product)) {
+          @for (product of oroProducts(); track trackByProductId($index, product)) {
             @defer (on viewport) {
             <product-card [product]="product"></product-card>
             }
@@ -113,7 +113,7 @@
     }
 
     <!-- Sección Esmeralda -->
-    @if (esmeraldaProducts.length > 0) {
+    @if (esmeraldaProducts().length > 0) {
       <div class="mb-16">
         <!-- Section Header -->
         <div class="flex justify-between items-center mb-12">
@@ -135,7 +135,7 @@
     
         <!-- Products Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          @for (product of esmeraldaProducts; track trackByProductId($index, product)) {
+          @for (product of esmeraldaProducts(); track trackByProductId($index, product)) {
             @defer (on viewport) {
             <product-card [product]="product"></product-card>
             }

@@ -1,12 +1,13 @@
 import { CommonModule } from "@angular/common";
-import { Component, Input } from "@angular/core";
+import { ChangeDetectionStrategy, Component, Input } from "@angular/core";
 import { Product } from "../../../interfaces/product.interface";
 
 @Component({
   selector: 'product-card',
   templateUrl: './product-card.component.html',
   imports: [CommonModule],
-  standalone: true
+  standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProductCardComponent {
   @Input() product!: Product;

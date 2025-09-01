@@ -1,6 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
 @import "tailwindcss";
 
+
+.critical-styles {
+    /* Estilos críticos para el primer render */
+    .bg-gray-50 { background-color: #f9fafb; }
+    .text-gray-900 { color: #111827; }
+    .container { max-width: 1280px; margin: 0 auto; padding: 0 1rem; }
+  }
+
 /* Optimizaciones de rendimiento */
 .line-clamp-2 {
     display: -webkit-box;

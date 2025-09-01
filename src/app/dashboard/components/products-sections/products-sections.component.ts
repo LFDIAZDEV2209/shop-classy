@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { Component, TrackByFunction } from "@angular/core";
+import { Component, computed, Signal, signal, TrackByFunction } from "@angular/core";
 import { ProductCardComponent } from "../../../shared/components/ui/product-card/product-card.component";
 import { Product } from "../../../shared/interfaces/product.interface";
 
@@ -12,7 +12,7 @@ import { Product } from "../../../shared/interfaces/product.interface";
 
 export class ProductsSectionsComponent {
     // Tendencias
-    products: Product[] = [
+    private productsSignal: Signal<Product[]> = signal<Product[]>([
     {
       id: 1,
       name: "Haruni Ginseng Aqua Sun Cream SPF50",
@@ -208,10 +208,7 @@ export class ProductsSectionsComponent {
       isTrend: false,
       brandCategory: "esmeralda"
     }
-  ];
-
-  // TrackBy functions para optimizar el rendering
-  trackByProductId: TrackByFunction<Product> = (index: number, product: Product) => product.id;
+  ]);
 
   // Getters optimizados con memoización
   private _trendingProducts: Product[] | null = null;
@@ -219,33 +216,31 @@ export class ProductsSectionsComponent {
   private _oroProducts: Product[] | null = null;
   private _esmeraldaProducts: Product[] | null = null;
 
-  get trendingProducts(): Product[] {
-    if (!this._trendingProducts) {
-      this._trendingProducts = this.products.filter(product => product.isTrend);
-    }
-    return this._trendingProducts;
-  }
+  // Computed properties optimizadas
+  readonly trendingProducts = computed(() => 
+    this.productsSignal().filter((product: Product) => product.isTrend)
+  );
 
-  get diamanteProducts(): Product[] {
-    if (!this._diamanteProducts) {
-      this._diamanteProducts = this.products.filter(product => product.brandCategory === 'diamante' && !product.isTrend);
-    }
-    return this._diamanteProducts;
-  }
+  readonly diamanteProducts = computed(() => 
+    this.productsSignal().filter((product: Product) => 
+      product.brandCategory === 'diamante' && !product.isTrend
+    )
+  );
 
-  get oroProducts(): Product[] {
-    if (!this._oroProducts) {
-      this._oroProducts = this.products.filter(product => product.brandCategory === 'oro' && !product.isTrend);
-    }
-    return this._oroProducts;
-  }
+  readonly oroProducts = computed(() => 
+    this.productsSignal().filter((product: Product) => 
+      product.brandCategory === 'oro' && !product.isTrend
+    )
+  );
 
-  get esmeraldaProducts(): Product[] {
-    if (!this._esmeraldaProducts) {
-      this._esmeraldaProducts = this.products.filter(product => product.brandCategory === 'esmeralda' && !product.isTrend);
-    }
-    return this._esmeraldaProducts;
-  }
+  readonly esmeraldaProducts = computed(() => 
+    this.productsSignal().filter((product: Product) => 
+      product.brandCategory === 'esmeralda' && !product.isTrend
+    )
+  );
+
+  // TrackBy optimizado
+  trackByProductId: TrackByFunction<Product> = (_, product) => product.id;
 
   onViewAll(section: string) {
     console.log(`Ver todo clicked for section: ${section}`);
