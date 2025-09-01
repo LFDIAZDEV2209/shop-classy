@@ -1,8 +1,11 @@
 import { Component } from "@angular/core";
+import { CommonModule } from "@angular/common";
 
 @Component({
   selector: 'dashboard-banner',
   templateUrl: './dashboard-banner.component.html',
+  standalone: true,
+  imports: [CommonModule]
 })
 
 export class DashboardBannerComponent {

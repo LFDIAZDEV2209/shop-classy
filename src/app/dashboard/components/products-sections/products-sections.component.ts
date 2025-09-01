@@ -7,6 +7,7 @@ import { Product } from "../../../shared/interfaces/product.interface";
   selector: 'products-sections',
   templateUrl: './products-sections.component.html',
   imports: [CommonModule, ProductCardComponent],
+  standalone: true
 })
 
 export class ProductsSectionsComponent {

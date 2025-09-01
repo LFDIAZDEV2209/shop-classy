@@ -1,2 +1,11 @@
-<navbar></navbar>
-<router-outlet />
+<div class="min-h-screen flex flex-col">
+    <navbar></navbar>
+    
+    <!-- Main content area -->
+    <main class="flex-grow">
+      <router-outlet />
+    </main>
+    
+    <!-- Footer at bottom -->
+    <app-footer></app-footer>
+  </div>
