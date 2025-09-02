@@ -4,10 +4,10 @@
       
       <!-- Left side - Navigation Links (Hidden on mobile) -->
       <div class="hidden md:flex items-center space-x-8">
-        <a href="#" class="text-white hover:text-pink-400 font-medium transition-colors duration-200">
+        <a href="#" [class]="'font-medium transition-colors duration-200 ' + textClasses()">
           Tienda
         </a>
-        <a href="#" class="text-white hover:text-pink-400 font-medium transition-colors duration-200">
+        <a href="#" [class]="'font-medium transition-colors duration-200 ' + textClasses()">
           Contacto
         </a>
       </div>
@@ -18,24 +18,24 @@
           <!-- Diamond Icon -->
           <lucide-angular [img]="Gem" class="w-6 h-6 text-pink-400" />
           <!-- Logo Text -->
-          <span class="text-xl md:text-2xl font-bold text-white hover:text-pink-400 transition-colors duration-200 cursor-pointer">ShopClassy</span>
+          <span [class]="'text-xl md:text-2xl font-bold transition-colors duration-200 cursor-pointer ' + textClasses()">ShopClassy</span>
         </div>
       </div>
 
       <!-- Right side - Icons -->
       <div class="flex items-center space-x-4 md:space-x-6">
         <!-- Search Icon (Hidden on mobile) -->
-        <button class="hidden md:block text-white hover:text-pink-400 transition-colors duration-200">
+        <button class="hidden md:block transition-colors duration-200" [class]="textClasses()">
           <lucide-angular [img]="Search" class="w-6 h-6" />
         </button>
 
         <!-- Profile Icon (Hidden on mobile) -->
-        <button class="hidden md:block text-white hover:text-pink-400 transition-colors duration-200">
+        <button class="hidden md:block transition-colors duration-200" [class]="textClasses()">
           <lucide-angular [img]="User" class="w-6 h-6" />
         </button>
 
         <!-- Shopping Cart Icon with Badge -->
-        <button class="text-white hover:text-pink-400 transition-colors duration-200 relative">
+        <button class="transition-colors duration-200 relative" [class]="textClasses()">
           <lucide-angular [img]="ShoppingCart" class="w-6 h-6" />
           <!-- Cart Badge - Reactivo -->
           @if (cartItemsCount() > 0) {
@@ -48,7 +48,7 @@
         <!-- Mobile Menu Button -->
         <button 
           (click)="toggleMenu()"
-          class="md:hidden text-white hover:text-pink-400 transition-colors duration-200">
+          class="md:hidden transition-colors duration-200" [class]="textClasses()">
           <lucide-angular [img]="Menu" class="w-6 h-6" />
         </button>
       </div>

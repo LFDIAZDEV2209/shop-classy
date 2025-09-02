@@ -2,6 +2,7 @@ import { CommonModule } from "@angular/common";
 import { ChangeDetectionStrategy, Component, Input } from "@angular/core";
 import { Product } from "../../../interfaces/product.interface";
 import { LucideAngularModule, Star, Gem, Crown, Shield } from "lucide-angular";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'product-card',
@@ -11,6 +12,7 @@ import { LucideAngularModule, Star, Gem, Crown, Shield } from "lucide-angular";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProductCardComponent {
+  constructor(private router: Router) {}
   @Input() product!: Product;
 
   // Iconos disponibles
@@ -20,6 +22,6 @@ export class ProductCardComponent {
   readonly Shield = Shield;
   
   onProductClick() {
-    console.log('Product clicked:', this.product);
+    this.router.navigate(['/products', this.product.id]);
   }
 }
