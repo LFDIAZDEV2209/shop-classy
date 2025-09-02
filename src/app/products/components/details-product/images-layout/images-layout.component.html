@@ -1,0 +1,58 @@
+<div class="w-full">
+    <!-- Imagen Principal -->
+    <div class="relative mb-4">
+      <div class="aspect-square bg-gray-100 rounded-lg overflow-hidden">
+        <img 
+          [src]="currentImage()" 
+          [alt]="productName"
+          class="w-full h-full object-cover transition-all duration-300 hover:scale-105">
+      </div>
+      
+      <!-- Botones de Navegación (Solo si hay múltiples imágenes) -->
+      @if (images.length > 1) {
+        <!-- Botón Anterior -->
+        <button 
+          (click)="prevImage()"
+          class="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 p-2 rounded-full shadow-lg transition-all duration-200">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+          </svg>
+        </button>
+        
+        <!-- Botón Siguiente -->
+        <button 
+          (click)="nextImage()"
+          class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 p-2 rounded-full shadow-lg transition-all duration-200">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+          </svg>
+        </button>
+      }
+    </div>
+    
+    <!-- Thumbnails -->
+    @if (images.length > 1) {
+      <div class="grid grid-cols-4 gap-2">
+        @for (image of images; track $index) {
+          <button 
+            (click)="selectImage($index)"
+            [class]="'aspect-square rounded-lg overflow-hidden border-2 transition-all duration-200 ' + 
+                     (selectedImageIndex() === $index ? 'border-pink-500 ring-2 ring-pink-200' : 'border-gray-200 hover:border-gray-300')">
+            <img 
+              [src]="image" 
+              [alt]="productName + ' - Imagen ' + ($index + 1)"
+              class="w-full h-full object-cover">
+          </button>
+        }
+      </div>
+    }
+    
+    <!-- Indicador de Imagen Actual -->
+    @if (images.length > 1) {
+      <div class="mt-3 text-center">
+        <span class="text-sm text-gray-500">
+          {{ selectedImageIndex() + 1 }} de {{ images.length }}
+        </span>
+      </div>
+    }
+  </div>
