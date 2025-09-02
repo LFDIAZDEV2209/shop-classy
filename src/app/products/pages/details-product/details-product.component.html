@@ -21,6 +21,7 @@
           [images]="productImages()" 
           [productName]="productName()">
         </images-layout>
+        <comments-component [productId]="currentProduct()?.id ?? null"></comments-component>
       </div>
       
       <!-- Right Column - Product Info -->
@@ -38,7 +39,7 @@
           </div>
         } @else {
           <!-- Product details component -->
-          <details [product]="currentProduct()"></details>
+          <details-component [product]="currentProduct()"></details-component>
         }
       </div>
       

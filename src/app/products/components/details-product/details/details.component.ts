@@ -5,7 +5,7 @@ import { LucideAngularModule } from "lucide-angular";
 import { Product } from "../../../../shared/interfaces/product.interface";
 
 @Component({
-  selector: 'details',
+  selector: 'details-component',
   templateUrl: './details.component.html',
   standalone: true,
   imports: [CommonModule, LucideAngularModule]

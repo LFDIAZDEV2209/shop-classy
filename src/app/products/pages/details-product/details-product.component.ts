@@ -6,12 +6,13 @@ import { DetailsComponent } from "../../components/details-product/details/detai
 import { LucideAngularModule, ChevronLeft } from "lucide-angular";
 import { Product } from "../../../shared/interfaces/product.interface";
 import { ProductsService } from "../../services/product.service";
+import { CommentsComponent } from "../../components/details-product/comments/comments.component";
 
 @Component({
   selector: 'details-product',
   templateUrl: './details-product.component.html',
   standalone: true,
-  imports: [CommonModule, ImagesLayoutComponent, DetailsComponent, LucideAngularModule]
+  imports: [CommonModule, ImagesLayoutComponent, DetailsComponent, LucideAngularModule, CommentsComponent]
 })
 
 export class DetailsProductComponent implements OnInit {
