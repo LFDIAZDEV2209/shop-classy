@@ -1,0 +1,230 @@
+<!-- Componente de detalles del producto -->
+<div class="bg-white rounded-lg shadow-lg p-8">
+  
+  <!-- Título del producto -->
+  <h1 class="text-3xl font-bold text-gray-900 mb-6">{{ productName() }}</h1>
+  
+  <!-- Precios -->
+  <div class="mb-6">
+    <div class="flex items-center space-x-3">
+      <span class="text-3xl font-bold text-pink-600">${{ productPrice() }}.00 COP</span>
+      @if (pricingData().hasDiscount) {
+        <span class="text-xl text-gray-500 line-through">${{ pricingData().originalPrice }}.00 COP</span>
+      }
+    </div>
+  </div>
+
+  <!-- Rating -->
+  <div class="flex items-center space-x-2 mb-6">
+    <div class="flex text-yellow-400">
+      @for (star of [1,2,3,4,5]; track star) {
+        <svg 
+          class="w-5 h-5" 
+          [class.fill-current]="star <= productRating()"
+          [class.text-gray-300]="star > productRating()"
+          fill="currentColor" 
+          viewBox="0 0 20 20">
+          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+        </svg>
+      }
+    </div>
+    <span class="text-gray-600">{{ productRating() }} (847 reseñas)</span>
+  </div>
+
+  <!-- Información del producto -->
+  <div class="space-y-3 mb-6">
+    <div class="flex items-center space-x-2">
+      <span class="text-gray-600">Tamaño:</span>
+      <span class="font-medium">{{ productInfo().size }}</span>
+    </div>
+    
+    <div class="flex items-center space-x-2">
+      <span class="text-gray-600">Registro Sanitario Invima:</span>
+      <span class="font-medium">{{ productInfo().sanitaryRegistration }}</span>
+    </div>
+    
+    <div class="flex items-center space-x-2">
+      <span class="text-gray-600">{{ productCategory() }}</span>
+      <span class="text-blue-600">💎</span>
+    </div>
+  </div>
+
+  <!-- Selector de cantidad -->
+  <div class="mb-6">
+    <div class="flex items-center space-x-3">
+      <span class="text-gray-600">Cantidad:</span>
+      <div class="flex items-center border border-gray-300 rounded-lg">
+        <button 
+          (click)="decreaseQuantity()"
+          class="px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-l-lg">
+          -
+        </button>
+        <span class="px-4 py-2 border-x border-gray-300 font-medium">{{ quantity() }}</span>
+        <button 
+          (click)="increaseQuantity()"
+          class="px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-r-lg">
+          +
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Botones de acción -->
+  <div class="space-y-3 mb-8">
+    @if (isProductAvailable()) {
+      <button 
+        class="w-full bg-pink-600 text-white font-medium py-3 px-4 rounded-lg hover:bg-pink-700 transition-colors duration-200">
+        Agregar al Carrito
+      </button>
+    } @else {
+      <button 
+        disabled
+        class="w-full bg-gray-300 text-gray-500 font-medium py-3 px-4 rounded-lg cursor-not-allowed">
+        Producto Agotado
+      </button>
+    }
+    
+    <button 
+      (click)="toggleFavorite()"
+      class="w-full bg-white border border-pink-600 text-pink-600 font-medium py-3 px-4 rounded-lg hover:bg-pink-50 transition-colors duration-200 flex items-center justify-center space-x-2">
+      <span class="text-pink-600">❤️</span>
+      <span>Agregar a Favoritos</span>
+    </button>
+  </div>
+
+  <!-- Badges de confianza -->
+  <div class="space-y-3 mb-8">
+    <div class="flex items-center space-x-2 text-sm text-gray-600">
+      <span class="text-green-600">🛡️</span>
+      <span>Productos Originales & Pago Seguro</span>
+    </div>
+    <div class="flex items-center space-x-2 text-sm text-gray-600">
+      <span class="text-blue-600">📄</span>
+      <span>Factura Electrónica</span>
+    </div>
+    <div class="flex items-center space-x-2 text-sm text-gray-600">
+      <span class="text-purple-600">🚚</span>
+      <span>Envíos Rápidos & Seguros</span>
+    </div>
+    <div class="flex items-center space-x-2 text-sm text-gray-600">
+      <span class="text-orange-600">🔄</span>
+      <span>Política de Devoluciones</span>
+    </div>
+  </div>
+
+  <!-- Secciones de acordeón -->
+  <div class="space-y-2">
+    
+    <!-- Descripción del Producto -->
+    <div class="border border-gray-200 rounded-lg">
+      <button 
+        (click)="toggleAccordion('description')"
+        class="w-full flex items-center justify-between p-4 text-left hover:bg-gray-50 transition-colors duration-200">
+        <span class="font-medium">Descripción del Producto</span>
+        <svg 
+          class="w-5 h-5 transform transition-transform duration-200"
+          [class.rotate-180]="isAccordionOpen('description')"
+          fill="none" 
+          stroke="currentColor" 
+          viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+        </svg>
+      </button>
+      @if (isAccordionOpen('description')) {
+        <div class="px-4 pb-4 text-gray-600">
+          {{ accordionContent().description }}
+        </div>
+      }
+    </div>
+
+    <!-- Modo de Uso -->
+    <div class="border border-gray-200 rounded-lg">
+      <button 
+        (click)="toggleAccordion('usage')"
+        class="w-full flex items-center justify-between p-4 text-left hover:bg-gray-50 transition-colors duration-200">
+        <span class="font-medium">Modo de Uso</span>
+        <svg 
+          class="w-5 h-5 transform transition-transform duration-200"
+          [class.rotate-180]="isAccordionOpen('usage')"
+          fill="none" 
+          stroke="currentColor" 
+          viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+        </svg>
+      </button>
+      @if (isAccordionOpen('usage')) {
+        <div class="px-4 pb-4 text-gray-600">
+          {{ accordionContent().usageInstructions }}
+        </div>
+      }
+    </div>
+
+    <!-- Recomendado para -->
+    <div class="border border-gray-200 rounded-lg">
+      <button 
+        (click)="toggleAccordion('recommended')"
+        class="w-full flex items-center justify-between p-4 text-left hover:bg-gray-50 transition-colors duration-200">
+        <span class="font-medium">Recomendado para</span>
+        <svg 
+          class="w-5 h-5 transform transition-transform duration-200"
+          [class.rotate-180]="isAccordionOpen('recommended')"
+          fill="none" 
+          stroke="currentColor" 
+          viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+        </svg>
+      </button>
+      @if (isAccordionOpen('recommended')) {
+        <div class="px-4 pb-4 text-gray-600">
+          {{ accordionContent().recommendedFor }}
+        </div>
+      }
+    </div>
+
+    <!-- Ingredientes & Formulación -->
+    <div class="border border-gray-200 rounded-lg">
+      <button 
+        (click)="toggleAccordion('ingredients')"
+        class="w-full flex items-center justify-between p-4 text-left hover:bg-gray-50 transition-colors duration-200">
+        <span class="font-medium">Ingredientes & Formulación</span>
+        <svg 
+          class="w-5 h-5 transform transition-transform duration-200"
+          [class.rotate-180]="isAccordionOpen('ingredients')"
+          fill="none" 
+          stroke="currentColor" 
+          viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+        </svg>
+      </button>
+      @if (isAccordionOpen('ingredients')) {
+        <div class="px-4 pb-4 text-gray-600">
+          {{ accordionContent().ingredients }}
+        </div>
+      }
+    </div>
+
+    <!-- Alertas & Contraindicaciones -->
+    <div class="border border-gray-200 rounded-lg">
+      <button 
+        (click)="toggleAccordion('warnings')"
+        class="w-full flex items-center justify-between p-4 text-left hover:bg-gray-50 transition-colors duration-200">
+        <span class="font-medium">Alertas & Contraindicaciones</span>
+        <svg 
+          class="w-5 h-5 transform transition-transform duration-200"
+          [class.rotate-180]="isAccordionOpen('warnings')"
+          fill="none" 
+          stroke="currentColor" 
+          viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+        </svg>
+      </button>
+      @if (isAccordionOpen('warnings')) {
+        <div class="px-4 pb-4 text-gray-600">
+          {{ accordionContent().warnings }}
+        </div>
+      }
+    </div>
+
+  </div>
+
+</div>

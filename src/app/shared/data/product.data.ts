@@ -5,13 +5,21 @@ export const PRODUCTS_DATA: Product[] = [
     id: 1,
     name: 'Mixsoon Centella Cleansing Foam',
     price: 89000,
+    originalPrice: 95000,
     image: '/product-1.jpg',
     rating: 4.6,
     category: 'Skincare',
     brandCategory: 'diamante',
     status: 'available',
     isTrend: true,
-    statusIcon: 'green-diamond'
+    statusIcon: 'green-diamond',
+    size: '150ml',
+    sanitaryRegistration: 'NSOC39712-25CO',
+    description: 'Limpiador facial en espuma con extracto de centella asiática que ayuda a limpiar suavemente la piel mientras la calma y protege.',
+    usageInstructions: 'Aplicar sobre la piel húmeda, masajear suavemente y enjuagar con agua tibia. Usar mañana y noche.',
+    recommendedFor: 'Pieles sensibles, con tendencia al acné y que buscan una limpieza suave pero efectiva.',
+    ingredients: 'Agua, Glicerina, Extracto de Centella Asiática, Ácido Hialurónico, Niacinamida.',
+    warnings: 'Para uso externo únicamente. Evitar contacto con los ojos. En caso de irritación, suspender el uso.'
   },
   {
     id: 2,

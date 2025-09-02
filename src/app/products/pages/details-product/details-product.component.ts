@@ -2,6 +2,7 @@ import { CommonModule } from "@angular/common";
 import { Component, OnInit, signal, computed } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
 import { ImagesLayoutComponent } from "../../components/details-product/images-layout/images-layout.component";
+import { DetailsComponent } from "../../components/details-product/details/details.component";
 import { LucideAngularModule, ChevronLeft } from "lucide-angular";
 import { Product } from "../../../shared/interfaces/product.interface";
 import { ProductsService } from "../../services/product.service";
@@ -10,7 +11,7 @@ import { ProductsService } from "../../services/product.service";
   selector: 'details-product',
   templateUrl: './details-product.component.html',
   standalone: true,
-  imports: [CommonModule, ImagesLayoutComponent, LucideAngularModule]
+  imports: [CommonModule, ImagesLayoutComponent, DetailsComponent, LucideAngularModule]
 })
 
 export class DetailsProductComponent implements OnInit {
