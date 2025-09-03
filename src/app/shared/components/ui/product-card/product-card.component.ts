@@ -24,4 +24,10 @@ export class ProductCardComponent {
   onProductClick() {
     this.router.navigate(['/products', this.product.id]);
   }
+
+  // En product-card.component.ts, agregar este método:
+  getDiscountPercentage(): number {
+    if (!this.product.originalPrice || this.product.originalPrice <= this.product.price) return 0;
+    return Math.round(((this.product.originalPrice - this.product.price) / this.product.originalPrice) * 100);
+  }
 }

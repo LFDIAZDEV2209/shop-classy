@@ -1,0 +1,137 @@
+<!-- src/app/products/components/list-products/filter-products/filter-products.component.html -->
+<div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
+  
+    <!-- Título y contador -->
+    <div class="mb-6">
+      <h1 class="text-3xl font-bold text-gray-900 mb-2">Todos los Productos</h1>
+      <p class="text-gray-600">{{ totalProducts() }} productos encontrados</p>
+    </div>
+    
+    <!-- Barra de filtros -->
+    <div class="flex flex-wrap items-center gap-4 mb-6">
+      
+      <!-- Filtro Categoría -->
+      <div class="relative">
+        <button 
+          (click)="toggleCategory()"
+          class="flex items-center space-x-2 px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg hover:bg-gray-100 transition-colors duration-200">
+          <span class="text-gray-700 font-medium">Categoría:</span>
+          <span class="text-gray-900 font-semibold">{{ getSelectedLabel(categoryOptions, selectedCategory()) }}</span>
+          <lucide-angular 
+            [img]="ChevronDown" 
+            class="w-4 h-4 text-gray-500 transition-transform duration-200"
+            [class.rotate-180]="isCategoryOpen()">
+          </lucide-angular>
+        </button>
+        
+        @if (isCategoryOpen()) {
+          <div class="absolute top-full left-0 mt-1 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-10">
+            @for (option of categoryOptions; track option.value) {
+              <button 
+                (click)="selectCategory(option)"
+                class="w-full text-left px-4 py-2 hover:bg-gray-50 transition-colors duration-200 first:rounded-t-lg last:rounded-b-lg"
+                [class.bg-pink-50]="selectedCategory() === option.value"
+                [class.text-pink-600]="selectedCategory() === option.value">
+                {{ option.label }}
+              </button>
+            }
+          </div>
+        }
+      </div>
+      
+      <!-- Filtro Categoría de Marca -->
+      <div class="relative">
+        <button 
+          (click)="toggleBrandCategory()"
+          class="flex items-center space-x-2 px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg hover:bg-gray-100 transition-colors duration-200">
+          <span class="text-gray-700 font-medium">Marca:</span>
+          <span class="text-gray-900 font-semibold">{{ getSelectedLabel(brandCategoryOptions, selectedBrandCategory()) }}</span>
+          <lucide-angular 
+            [img]="ChevronDown" 
+            class="w-4 h-4 text-gray-500 transition-transform duration-200"
+            [class.rotate-180]="isBrandCategoryOpen()">
+          </lucide-angular>
+        </button>
+        
+        @if (isBrandCategoryOpen()) {
+          <div class="absolute top-full left-0 mt-1 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-10">
+            @for (option of brandCategoryOptions; track option.value) {
+              <button 
+                (click)="selectBrandCategory(option)"
+                class="w-full text-left px-4 py-2 hover:bg-gray-50 transition-colors duration-200 first:rounded-t-lg last:rounded-b-lg"
+                [class.bg-pink-50]="selectedBrandCategory() === option.value"
+                [class.text-pink-600]="selectedBrandCategory() === option.value">
+                {{ option.label }}
+              </button>
+            }
+          </div>
+        }
+      </div>
+      
+      <!-- Filtro Precio -->
+      <div class="relative">
+        <button 
+          (click)="togglePrice()"
+          class="flex items-center space-x-2 px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg hover:bg-gray-100 transition-colors duration-200">
+          <span class="text-gray-700 font-medium">Precio:</span>
+          <span class="text-gray-900 font-semibold">{{ getSelectedLabel(priceOptions, selectedPrice()) }}</span>
+          <lucide-angular 
+            [img]="ChevronDown" 
+            class="w-4 h-4 text-gray-500 transition-transform duration-200"
+            [class.rotate-180]="isPriceOpen()">
+          </lucide-angular>
+        </button>
+        
+        @if (isPriceOpen()) {
+          <div class="absolute top-full left-0 mt-1 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-10">
+            @for (option of priceOptions; track option.value) {
+              <button 
+                (click)="selectPrice(option)"
+                class="w-full text-left px-4 py-2 hover:bg-gray-50 transition-colors duration-200 first:rounded-t-lg last:rounded-b-lg"
+                [class.bg-pink-50]="selectedPrice() === option.value"
+                [class.text-pink-600]="selectedPrice() === option.value">
+                {{ option.label }}
+              </button>
+            }
+          </div>
+        }
+      </div>
+      
+    </div>
+    
+    <!-- Contador y ordenamiento -->
+    <div class="flex items-center justify-between">
+      <div class="text-gray-600">
+        Mostrando {{ showingProducts() }} productos
+      </div>
+      
+      <div class="relative">
+        <button 
+          (click)="toggleSort()"
+          class="flex items-center space-x-2 px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg hover:bg-gray-100 transition-colors duration-200">
+          <span class="text-gray-700 font-medium">Ordenar por:</span>
+          <span class="text-gray-900 font-semibold">{{ getSelectedLabel(sortOptions, selectedSort()) }}</span>
+          <lucide-angular 
+            [img]="ChevronDown" 
+            class="w-4 h-4 text-gray-500 transition-transform duration-200"
+            [class.rotate-180]="isSortOpen()">
+          </lucide-angular>
+        </button>
+        
+        @if (isSortOpen()) {
+          <div class="absolute top-full right-0 mt-1 w-56 bg-white border border-gray-200 rounded-lg shadow-lg z-10">
+            @for (option of sortOptions; track option.value) {
+              <button 
+                (click)="selectSort(option)"
+                class="w-full text-left px-4 py-2 hover:bg-gray-50 transition-colors duration-200 first:rounded-t-lg last:rounded-b-lg"
+                [class.bg-pink-50]="selectedSort() === option.value"
+                [class.text-pink-600]="selectedSort() === option.value">
+                {{ option.label }}
+              </button>
+            }
+          </div>
+        }
+      </div>
+    </div>
+    
+  </div>

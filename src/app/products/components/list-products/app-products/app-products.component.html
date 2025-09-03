@@ -1,0 +1,24 @@
+<!-- src/app/products/components/list-products/app-products/app-products.component.html -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+  
+    @for (product of filteredProducts(); track product.id) {
+      <product-card [product]="product"></product-card>
+    }
+    
+    <!-- Estado de carga -->
+    @if (isLoading()) {
+      <div class="col-span-full flex justify-center items-center py-12">
+        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-pink-600"></div>
+      </div>
+    }
+    
+    <!-- Estado vacío -->
+    @if (!isLoading() && filteredProducts().length === 0) {
+      <div class="col-span-full text-center py-12">
+        <div class="text-gray-400 text-6xl mb-4">📦</div>
+        <h3 class="text-xl font-semibold text-gray-900 mb-2">No se encontraron productos</h3>
+        <p class="text-gray-600">Intenta ajustar los filtros para ver más resultados.</p>
+      </div>
+    }
+    
+  </div>
