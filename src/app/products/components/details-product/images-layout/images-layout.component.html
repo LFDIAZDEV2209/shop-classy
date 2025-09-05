@@ -2,10 +2,18 @@
     <!-- Imagen Principal -->
     <div class="relative mb-4">
       <div class="aspect-square bg-gray-100 rounded-lg overflow-hidden">
-        <img 
+        @if(currentImage()) {
+          <img 
           [src]="currentImage()" 
           [alt]="productName"
           class="w-full h-full object-cover transition-all duration-300 hover:scale-105">
+        } @else {
+          <div class="w-full h-full flex items-center justify-center">
+            <div class="animate-pulse">
+              <div class="w-16 h-16 bg-gray-300 rounded-full"></div>
+            </div>
+          </div>
+        }
       </div>
       
       <!-- Botones de Navegación (Solo si hay múltiples imágenes) -->

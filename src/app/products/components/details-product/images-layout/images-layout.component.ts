@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { Component, Input, signal } from "@angular/core";
+import { Component, Input, signal, OnChanges, SimpleChanges } from "@angular/core";
 
 @Component({
   selector: 'images-layout',
@@ -8,7 +8,7 @@ import { Component, Input, signal } from "@angular/core";
   imports: [CommonModule]
 })
     
-export class ImagesLayoutComponent {
+export class ImagesLayoutComponent implements OnChanges {
   @Input() images: string[] = [];
   @Input() productName: string = '';
   
@@ -18,9 +18,14 @@ export class ImagesLayoutComponent {
   // Computed para la imagen actual
   readonly currentImage = signal('');
   
-  constructor() {
-    // Inicializar con la primera imagen
-    this.currentImage.set(this.images[0] || '');
+  constructor() {}
+  
+  ngOnChanges(changes: SimpleChanges) {
+    // Cuando las imágenes cambian, actualizar la imagen actual
+    if (changes['images'] && this.images.length > 0) {
+      this.currentImage.set(this.images[0]);
+      this.selectedImageIndex.set(0);
+    }
   }
   
   // Método para cambiar imagen
