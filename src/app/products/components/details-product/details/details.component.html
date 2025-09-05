@@ -69,8 +69,12 @@
   <div class="space-y-3 mb-8">
     @if (isProductAvailable()) {
       <button 
-        class="w-full bg-pink-600 text-white font-medium py-3 px-4 rounded-lg hover:bg-pink-700 transition-colors duration-200">
-        Agregar al Carrito
+        #addToCartButton
+        (click)="addToCart()"
+        class="w-full bg-pink-600 text-white font-medium py-3 px-4 rounded-lg hover:bg-pink-700 transition-colors duration-200 relative overflow-hidden">
+        <span class="relative z-10">Agregar al Carrito</span>
+        <!-- Efecto de ondas al hacer clic -->
+        <div class="absolute inset-0 bg-white opacity-0 hover:opacity-20 transition-opacity duration-200"></div>
       </button>
     } @else {
       <button 
@@ -204,3 +208,6 @@
   </div>
 
 </div>
+
+<!-- Componente de animación del carrito -->
+<cart-animation #cartAnimation></cart-animation>

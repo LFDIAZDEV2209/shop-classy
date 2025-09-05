@@ -1,14 +1,16 @@
-import { Component, signal, computed, input, ChangeDetectionStrategy } from "@angular/core";
+import { Component, signal, computed, input, ChangeDetectionStrategy, ViewChild, ElementRef } from "@angular/core";
 import { ProductsService } from "../../../services/product.service";
 import { CommonModule } from "@angular/common";
-import { LucideAngularModule, Shield, Crown, Gem, FileText, Truck, RotateCcw, Heart, ChevronDown, Star } from "lucide-angular";
+import { LucideAngularModule, Shield, Crown, Gem, FileText, Truck, RotateCcw, Heart, ChevronDown, Star, ShoppingCart } from "lucide-angular";
 import { Product } from "../../../../shared/interfaces/product.interface";
+import { CartService } from "../../../../shared/services/cart.service";
+import { CartAnimationComponent } from "../../../../shared/utils/cart-animation.component";
 
 @Component({
   selector: 'details-component',
   templateUrl: './details.component.html',
   standalone: true,
-  imports: [CommonModule, LucideAngularModule],
+  imports: [CommonModule, LucideAngularModule, CartAnimationComponent],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
@@ -31,6 +33,11 @@ export class DetailsComponent {
   readonly Heart = Heart;
   readonly ChevronDown = ChevronDown;
   readonly Star = Star;
+  readonly ShoppingCart = ShoppingCart;
+  
+  // Referencias para la animación
+  @ViewChild('addToCartButton', { static: false }) addToCartButton!: ElementRef;
+  @ViewChild('cartAnimation', { static: false }) cartAnimation!: CartAnimationComponent;
   
   // Computed principal que obtiene el producto una sola vez
   private readonly currentProduct = computed(() => this.product());
@@ -147,7 +154,10 @@ export class DetailsComponent {
   // Cambio: Ahora solo guardamos el acordeón abierto actual (string | null)
   readonly openAccordion = signal<string | null>(null);
 
-  constructor(private productsService: ProductsService) {}
+  constructor(
+    private productsService: ProductsService,
+    private cartService: CartService
+  ) {}
 
   // Métodos para manejar la cantidad
   increaseQuantity() {
@@ -178,5 +188,38 @@ export class DetailsComponent {
   // Método para verificar si un acordeón está abierto
   isAccordionOpen(section: string): boolean {
     return this.openAccordion() === section;
+  }
+
+  // Método para agregar al carrito con animación
+  addToCart() {
+    const product = this.currentProduct();
+    if (!product || !this.isProductAvailable()) return;
+
+    const quantity = this.quantity();
+    
+    // Agregar al carrito
+    this.cartService.addToCart(product, quantity);
+    
+    // Iniciar animación
+    this.animateToCart();
+  }
+
+  private animateToCart() {
+    if (!this.addToCartButton || !this.cartAnimation) return;
+
+    // Buscar el icono del carrito en el navbar
+    const cartIcon = document.querySelector('[data-cart-icon]') as HTMLElement;
+    if (!cartIcon) return;
+
+    // Iniciar la animación
+    this.cartAnimation.animateToCart(
+      this.addToCartButton.nativeElement,
+      cartIcon,
+      this.quantity(),
+      () => {
+        // Callback cuando termine la animación
+        console.log('Animación completada');
+      }
+    );
   }
 }

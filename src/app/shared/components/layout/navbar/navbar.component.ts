@@ -6,6 +6,7 @@ import { filter, debounceTime, distinctUntilChanged } from "rxjs";
 import { Subject } from "rxjs";
 import { ProductsService } from "../../../../products/services/product.service";
 import { Product } from "../../../interfaces/product.interface";
+import { CartService } from "../../../services/cart.service";
 
 @Component({
   selector: 'navbar',
@@ -25,7 +26,6 @@ export class NavbarComponent implements OnInit {
   readonly X = X;
   
   readonly isMenuOpen = signal(false);
-  readonly cartItemsCount = signal(0);
   readonly isScrolled = signal(false);
   readonly currentRoute = signal('');
   
@@ -50,7 +50,7 @@ export class NavbarComponent implements OnInit {
 });
 
   readonly cartBadgeClasses = computed(() => 
-    this.cartItemsCount() > 0 
+    this.cartService.totalUniqueProducts() > 0 
       ? 'bg-rose-500 text-white' 
       : 'bg-gray-300 text-gray-600'
   );
@@ -75,7 +75,8 @@ export class NavbarComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private productsService: ProductsService
+    private productsService: ProductsService,
+    public cartService: CartService
   ) {}
 
   ngOnInit() {
@@ -176,10 +177,6 @@ export class NavbarComponent implements OnInit {
 
   toggleMenu() {
     this.isMenuOpen.update((open: boolean) => !open);
-  }
-
-  updateCartCount(count: number) {
-    this.cartItemsCount.set(count);
   }
 
   goToHome() {
