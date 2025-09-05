@@ -7,7 +7,7 @@
         <a href="/products" [class]="'font-medium transition-colors duration-200 ' + textClasses()">
           Tienda
         </a>
-        <a (click)="onScrollDown()" [class]="'cursor-pointer font-medium transition-colors duration-200 ' + textClasses()">
+        <a href="#" [class]="'font-medium transition-colors duration-200 ' + textClasses()">
           Contacto
         </a>
       </div>
@@ -23,11 +23,71 @@
       </div>
 
       <!-- Right side - Icons -->
-      <div class="flex items-center space-x-4 md:space-x-6">
+      <div class="flex items-center space-x-4 md:space-x-6 relative">
         <!-- Search Icon (Hidden on mobile) -->
-        <button class="hidden md:block transition-colors duration-200" [class]="textClasses()">
+        <button 
+          (click)="toggleSearch()"
+          [class]="searchButtonClasses()">
           <lucide-angular [img]="Search" class="w-6 h-6" />
         </button>
+
+        <!-- Search Bar - Posicionado debajo de la lupa -->
+        @if (isSearchOpen()) {
+          <div class="absolute bg-white top-full right-0 mt-7 z-50 animate-slideDown rounded-lg">
+            <div class="relative">
+              <input
+                type="text"
+                [value]="searchQuery()"
+                (input)="onSearchInput($event)"
+                placeholder="Buscar productos..."
+                [class]="'w-80 px-3 py-2 pr-8 text-sm border border-gray-300 rounded-md focus:ring-2 focus:ring-pink-500 focus:border-transparent outline-none transition-all duration-200 shadow-lg ' + (isSearchClosing() ? 'animate-slideUp' : '')"
+                autofocus
+              />
+              <button
+                (click)="closeSearch()"
+                class="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors duration-200"
+              >
+                <lucide-angular [img]="X" class="w-4 h-4" />
+              </button>
+            </div>
+            
+            <!-- Search Results - Dropdown debajo del input -->
+            @if (searchQuery().length > 0) {
+              <div class="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-md shadow-lg max-h-64 overflow-y-auto z-50">
+                @if (isSearching()) {
+                  <div class="flex items-center justify-center py-3">
+                    <div class="animate-spin rounded-full h-4 w-4 border-b-2 border-pink-600"></div>
+                    <span class="ml-2 text-sm text-gray-600">Buscando...</span>
+                  </div>
+                } @else if (searchResults().length > 0) {
+                  <div class="py-1">
+                    @for (product of searchResults(); track product.id) {
+                      <div 
+                        (click)="selectProduct(product)"
+                        class="flex items-center space-x-2 p-2 hover:bg-gray-50 cursor-pointer transition-colors duration-200"
+                      >
+                        <img 
+                          [src]="product.image" 
+                          [alt]="product.name"
+                          class="w-8 h-8 object-cover rounded"
+                        />
+                        <div class="flex-1 min-w-0">
+                          <h4 class="text-xs font-medium text-gray-900 truncate">{{ product.name }}</h4>
+                          <p class="text-xs text-gray-500">{{ product.category }}</p>
+                          <p class="text-xs font-semibold text-pink-600">${{ product.price.toLocaleString() }}.00</p>
+                        </div>
+                      </div>
+                    }
+                  </div>
+                } @else {
+                  <div class="text-center py-3 text-gray-500">
+                    <p class="text-sm">No se encontraron productos</p>
+                  </div>
+                }
+              </div>
+            }
+          </div>
+        }
 
         <!-- Profile Icon (Hidden on mobile) -->
         <button class="hidden md:block transition-colors duration-200" [class]="textClasses()">
@@ -58,14 +118,24 @@
     @if (isMenuOpen()) {
       <div class="md:hidden bg-white shadow-lg rounded-lg mt-2 mx-4 border border-gray-200">
         <div class="px-4 pt-4 pb-3 space-y-3">
+          <!-- Mobile Search -->
+          <div class="relative">
+            <input
+              type="text"
+              placeholder="Buscar productos..."
+              class="w-full px-3 py-2 pr-10 text-sm border border-gray-300 rounded-md focus:ring-2 focus:ring-pink-500 focus:border-transparent outline-none"
+            />
+            <lucide-angular [img]="Search" class="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+          </div>
+          
           <!-- Mobile Navigation Links -->
           <a href="/products" class="block px-3 py-3 text-gray-900 hover:text-pink-600 hover:bg-pink-50 font-medium transition-colors duration-200 rounded-lg">
             Tienda
           </a>
-          <a (click)="onScrollDown()" class="cursor-pointer block px-3 py-3 text-gray-900 hover:text-pink-600 hover:bg-pink-50 font-medium transition-colors duration-200 rounded-lg">
+          <a href="#" class="block px-3 py-3 text-gray-900 hover:text-pink-600 hover:bg-pink-50 font-medium transition-colors duration-200 rounded-lg">
             Contacto
           </a>
-          <a (click)="onScrollDown()" class="cursor-pointer block px-3 py-3 text-gray-900 hover:text-pink-600 hover:bg-pink-50 font-medium transition-colors duration-200 rounded-lg">
+          <a href="#" class="block px-3 py-3 text-gray-900 hover:text-pink-600 hover:bg-pink-50 font-medium transition-colors duration-200 rounded-lg">
             Mi Cuenta
           </a>
           

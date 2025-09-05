@@ -1,8 +1,11 @@
 import { Component, computed, signal, OnInit, OnDestroy } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { LucideAngularModule, Search, ShoppingCart, Menu, ChevronDown, User, Gem } from "lucide-angular";
+import { LucideAngularModule, Search, ShoppingCart, Menu, ChevronDown, User, Gem, X } from "lucide-angular";
 import { NavigationEnd, Router } from "@angular/router";
-import { filter } from "rxjs";
+import { filter, debounceTime, distinctUntilChanged } from "rxjs";
+import { Subject } from "rxjs";
+import { ProductsService } from "../../../../products/services/product.service";
+import { Product } from "../../../interfaces/product.interface";
 
 @Component({
   selector: 'navbar',
@@ -18,10 +21,20 @@ export class NavbarComponent implements OnInit, OnDestroy {
   readonly ChevronDown = ChevronDown;
   readonly User = User;
   readonly Gem = Gem;
+  readonly X = X;
+  
   readonly isMenuOpen = signal(false);
   readonly cartItemsCount = signal(0);
   readonly isScrolled = signal(false);
   readonly currentRoute = signal('');
+  
+  // ✅ Signals para búsqueda
+  readonly isSearchOpen = signal(false);
+  readonly searchQuery = signal('');
+  readonly searchResults = signal<Product[]>([]);
+  readonly isSearching = signal(false);
+  readonly isSearchClosing = signal(false);
+  private searchSubject = new Subject<string>();
 
   // ✅ Computed para clases dinámicas
   readonly navbarClasses = computed(() => {
@@ -52,7 +65,17 @@ export class NavbarComponent implements OnInit, OnDestroy {
     return 'text-black hover:text-pink-400'
   });
 
-  constructor(private router: Router) {}
+  // ✅ Computed para clases del botón de búsqueda
+  readonly searchButtonClasses = computed(() => {
+    const baseClasses = "hidden md:block transition-all duration-200 search-icon-rotate";
+    const textClasses = this.textClasses();
+    return `${baseClasses} ${textClasses}`;
+  });
+
+  constructor(
+    private router: Router,
+    private productsService: ProductsService
+  ) {}
 
   ngOnInit() {
     // Escuchar cambios de ruta
@@ -64,14 +87,95 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
     // Listener para scroll
     window.addEventListener('scroll', this.onScroll.bind(this));
+
+    // Configurar búsqueda con debounce
+    this.searchSubject
+      .pipe(
+        debounceTime(300),
+        distinctUntilChanged()
+      )
+      .subscribe(query => {
+        this.performSearch(query);
+      });
   }
 
   ngOnDestroy() {
     window.removeEventListener('scroll', this.onScroll.bind(this));
+    this.searchSubject.complete();
   }
 
   private onScroll() {
     this.isScrolled.set(window.scrollY > 50);
+  }
+
+  // ✅ Métodos de búsqueda con animación de cierre
+  toggleSearch() {
+    if (this.isSearchOpen()) {
+      this.closeSearch();
+    } else {
+      this.openSearch();
+    }
+  }
+
+  openSearch() {
+    this.isSearchOpen.set(true);
+    this.isSearchClosing.set(false);
+  }
+
+  closeSearch() {
+    this.isSearchClosing.set(true);
+    // Esperar a que termine la animación antes de cerrar
+    setTimeout(() => {
+      this.isSearchOpen.set(false);
+      this.isSearchClosing.set(false);
+      this.clearSearch();
+    }, 300); // Duración de la animación
+  }
+
+  onSearchInput(event: Event) {
+    const target = event.target as HTMLInputElement;
+    const query = target.value.trim();
+    this.searchQuery.set(query);
+    
+    if (query.length > 0) {
+      this.searchSubject.next(query);
+    } else {
+      this.clearSearch();
+    }
+  }
+
+  private performSearch(query: string) {
+    if (query.length < 2) {
+      this.searchResults.set([]);
+      return;
+    }
+
+    this.isSearching.set(true);
+    
+    // Simular búsqueda (puedes reemplazar con una API real)
+    setTimeout(() => {
+      const allProducts = this.productsService.getAllProducts();
+      const results = allProducts.filter(product => 
+        product.name.toLowerCase().includes(query.toLowerCase()) ||
+        product.category.toLowerCase().includes(query.toLowerCase()) ||
+        product.brandCategory.toLowerCase().includes(query.toLowerCase())
+      );
+      
+      this.searchResults.set(results);
+      this.isSearching.set(false);
+    }, 200);
+  }
+
+  clearSearch() {
+    this.searchQuery.set('');
+    this.searchResults.set([]);
+    this.isSearching.set(false);
+  }
+
+  selectProduct(product: Product) {
+    this.router.navigate(['/products', product.id]);
+    this.clearSearch();
+    this.isSearchOpen.set(false);
   }
 
   toggleMenu() {
