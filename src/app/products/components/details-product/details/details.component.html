@@ -18,14 +18,10 @@
   <div class="flex items-center space-x-2 mb-6">
     <div class="flex text-yellow-400">
       @for (star of [1,2,3,4,5]; track star) {
-        <svg 
-          class="w-5 h-5" 
-          [class.fill-current]="star <= productRating()"
-          [class.text-gray-300]="star > productRating()"
-          fill="currentColor" 
-          viewBox="0 0 20 20">
-          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-        </svg>
+        <lucide-angular 
+          [img]="Star" 
+          [class]="'w-5 h-5 ' + (star <= productRating() ? 'fill-current text-yellow-400' : 'text-gray-300')">
+        </lucide-angular>
       }
     </div>
     <span class="text-gray-600">{{ productRating() }} (847 reseñas)</span>
@@ -45,7 +41,7 @@
     
     <div class="flex items-center space-x-2">
       <span class="text-gray-600">{{ productCategory() }}</span>
-      <span class="text-blue-600">💎</span>
+      <lucide-angular [img]="brandCategoryIcon()" [class]="'w-5 h-5 ' + brandCategoryColor()"></lucide-angular>
     </div>
   </div>
 
@@ -84,30 +80,30 @@
       </button>
     }
     
-    <button 
+    <!-- <button 
       (click)="toggleFavorite()"
       class="w-full bg-white border border-pink-600 text-pink-600 font-medium py-3 px-4 rounded-lg hover:bg-pink-50 transition-colors duration-200 flex items-center justify-center space-x-2">
-      <span class="text-pink-600">❤️</span>
+      <lucide-angular [img]="Heart" class="w-5 h-5 text-pink-600"></lucide-angular>
       <span>Agregar a Favoritos</span>
-    </button>
+    </button> -->
   </div>
 
   <!-- Badges de confianza -->
   <div class="space-y-3 mb-8">
     <div class="flex items-center space-x-2 text-sm text-gray-600">
-      <span class="text-green-600">🛡️</span>
+      <lucide-angular [img]="Shield" class="w-4 h-4 text-green-600"></lucide-angular>
       <span>Productos Originales & Pago Seguro</span>
     </div>
     <div class="flex items-center space-x-2 text-sm text-gray-600">
-      <span class="text-blue-600">📄</span>
+      <lucide-angular [img]="FileText" class="w-4 h-4 text-blue-600"></lucide-angular>
       <span>Factura Electrónica</span>
     </div>
     <div class="flex items-center space-x-2 text-sm text-gray-600">
-      <span class="text-purple-600">🚚</span>
+      <lucide-angular [img]="Truck" class="w-4 h-4 text-purple-600"></lucide-angular>
       <span>Envíos Rápidos & Seguros</span>
     </div>
     <div class="flex items-center space-x-2 text-sm text-gray-600">
-      <span class="text-orange-600">🔄</span>
+      <lucide-angular [img]="RotateCcw" class="w-4 h-4 text-orange-600"></lucide-angular>
       <span>Política de Devoluciones</span>
     </div>
   </div>
@@ -121,14 +117,10 @@
         (click)="toggleAccordion('description')"
         class="w-full flex items-center justify-between p-4 text-left hover:bg-gray-50 transition-colors duration-200">
         <span class="font-medium">Descripción del Producto</span>
-        <svg 
-          class="w-5 h-5 transform transition-transform duration-200"
-          [class.rotate-180]="isAccordionOpen('description')"
-          fill="none" 
-          stroke="currentColor" 
-          viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-        </svg>
+        <lucide-angular 
+          [img]="ChevronDown" 
+          [class]="'w-5 h-5 transform transition-transform duration-200 ' + (isAccordionOpen('description') ? 'rotate-180' : '')">
+        </lucide-angular>
       </button>
       @if (isAccordionOpen('description')) {
         <div class="px-4 pb-4 text-gray-600">
@@ -143,14 +135,10 @@
         (click)="toggleAccordion('usage')"
         class="w-full flex items-center justify-between p-4 text-left hover:bg-gray-50 transition-colors duration-200">
         <span class="font-medium">Modo de Uso</span>
-        <svg 
-          class="w-5 h-5 transform transition-transform duration-200"
-          [class.rotate-180]="isAccordionOpen('usage')"
-          fill="none" 
-          stroke="currentColor" 
-          viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-        </svg>
+        <lucide-angular 
+          [img]="ChevronDown" 
+          [class]="'w-5 h-5 transform transition-transform duration-200 ' + (isAccordionOpen('usage') ? 'rotate-180' : '')">
+        </lucide-angular>
       </button>
       @if (isAccordionOpen('usage')) {
         <div class="px-4 pb-4 text-gray-600">
@@ -165,14 +153,10 @@
         (click)="toggleAccordion('recommended')"
         class="w-full flex items-center justify-between p-4 text-left hover:bg-gray-50 transition-colors duration-200">
         <span class="font-medium">Recomendado para</span>
-        <svg 
-          class="w-5 h-5 transform transition-transform duration-200"
-          [class.rotate-180]="isAccordionOpen('recommended')"
-          fill="none" 
-          stroke="currentColor" 
-          viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-        </svg>
+        <lucide-angular 
+          [img]="ChevronDown" 
+          [class]="'w-5 h-5 transform transition-transform duration-200 ' + (isAccordionOpen('recommended') ? 'rotate-180' : '')">
+        </lucide-angular>
       </button>
       @if (isAccordionOpen('recommended')) {
         <div class="px-4 pb-4 text-gray-600">
@@ -187,14 +171,10 @@
         (click)="toggleAccordion('ingredients')"
         class="w-full flex items-center justify-between p-4 text-left hover:bg-gray-50 transition-colors duration-200">
         <span class="font-medium">Ingredientes & Formulación</span>
-        <svg 
-          class="w-5 h-5 transform transition-transform duration-200"
-          [class.rotate-180]="isAccordionOpen('ingredients')"
-          fill="none" 
-          stroke="currentColor" 
-          viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-        </svg>
+        <lucide-angular 
+          [img]="ChevronDown" 
+          [class]="'w-5 h-5 transform transition-transform duration-200 ' + (isAccordionOpen('ingredients') ? 'rotate-180' : '')">
+        </lucide-angular>
       </button>
       @if (isAccordionOpen('ingredients')) {
         <div class="px-4 pb-4 text-gray-600">
@@ -209,14 +189,10 @@
         (click)="toggleAccordion('warnings')"
         class="w-full flex items-center justify-between p-4 text-left hover:bg-gray-50 transition-colors duration-200">
         <span class="font-medium">Alertas & Contraindicaciones</span>
-        <svg 
-          class="w-5 h-5 transform transition-transform duration-200"
-          [class.rotate-180]="isAccordionOpen('warnings')"
-          fill="none" 
-          stroke="currentColor" 
-          viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-        </svg>
+        <lucide-angular 
+          [img]="ChevronDown" 
+          [class]="'w-5 h-5 transform transition-transform duration-200 ' + (isAccordionOpen('warnings') ? 'rotate-180' : '')">
+        </lucide-angular>
       </button>
       @if (isAccordionOpen('warnings')) {
         <div class="px-4 pb-4 text-gray-600">

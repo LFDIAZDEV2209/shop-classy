@@ -12,7 +12,7 @@ import { CommentsComponent } from "../../components/details-product/comments/com
   selector: 'details-product',
   templateUrl: './details-product.component.html',
   standalone: true,
-  imports: [CommonModule, ImagesLayoutComponent, DetailsComponent, LucideAngularModule, CommentsComponent],
+  imports: [CommonModule, ImagesLayoutComponent, DetailsComponent, LucideAngularModule], // CommentsComponent
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 

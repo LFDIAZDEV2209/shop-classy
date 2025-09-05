@@ -1,7 +1,7 @@
 import { Component, signal, computed, input, ChangeDetectionStrategy } from "@angular/core";
 import { ProductsService } from "../../../services/product.service";
 import { CommonModule } from "@angular/common";
-import { LucideAngularModule } from "lucide-angular";
+import { LucideAngularModule, Shield, Crown, Gem, FileText, Truck, RotateCcw, Heart, ChevronDown, Star } from "lucide-angular";
 import { Product } from "../../../../shared/interfaces/product.interface";
 
 @Component({
@@ -20,6 +20,17 @@ export class DetailsComponent {
   // Signals para estado interno
   readonly isLoading = signal(false);
   readonly error = signal<string | null>(null);
+  
+  // Iconos de Lucide Angular
+  readonly Shield = Shield;
+  readonly Crown = Crown;
+  readonly Gem = Gem;
+  readonly FileText = FileText;
+  readonly Truck = Truck;
+  readonly RotateCcw = RotateCcw;
+  readonly Heart = Heart;
+  readonly ChevronDown = ChevronDown;
+  readonly Star = Star;
   
   // Computed principal que obtiene el producto una sola vez
   private readonly currentProduct = computed(() => this.product());
@@ -100,10 +111,41 @@ export class DetailsComponent {
     };
   });
 
+  // Computed para obtener el icono de categoría de marca
+  readonly brandCategoryIcon = computed(() => {
+    const brandCategory = this.productBrandCategory();
+    switch (brandCategory) {
+      case 'diamante':
+        return this.Gem;
+      case 'oro':
+        return this.Crown;
+      case 'esmeralda':
+        return this.Shield;
+      default:
+        return this.Gem; // Por defecto diamante
+    }
+  });
+
+  // Computed para obtener el color de la categoría de marca
+  readonly brandCategoryColor = computed(() => {
+    const brandCategory = this.productBrandCategory();
+    switch (brandCategory) {
+      case 'diamante':
+        return 'text-blue-600';
+      case 'oro':
+        return 'text-yellow-600';
+      case 'esmeralda':
+        return 'text-green-600';
+      default:
+        return 'text-blue-600';
+    }
+  });
+
   // Signals para estado interno
   readonly quantity = signal(1);
   readonly isFavorite = signal(false);
-  readonly openAccordions = signal<Set<string>>(new Set());
+  // Cambio: Ahora solo guardamos el acordeón abierto actual (string | null)
+  readonly openAccordion = signal<string | null>(null);
 
   constructor(private productsService: ProductsService) {}
 
@@ -121,21 +163,20 @@ export class DetailsComponent {
     this.isFavorite.update(fav => !fav);
   }
 
-  // Método para toggle de acordeones
+  // Método para toggle de acordeones - Solo uno a la vez
   toggleAccordion(section: string) {
-    this.openAccordions.update(open => {
-      const newSet = new Set(open);
-      if (newSet.has(section)) {
-        newSet.delete(section);
-      } else {
-        newSet.add(section);
+    this.openAccordion.update(current => {
+      // Si el acordeón actual está abierto, lo cerramos
+      if (current === section) {
+        return null;
       }
-      return newSet;
+      // Si no, abrimos el nuevo acordeón (cierra el anterior automáticamente)
+      return section;
     });
   }
 
   // Método para verificar si un acordeón está abierto
   isAccordionOpen(section: string): boolean {
-    return this.openAccordions().has(section);
+    return this.openAccordion() === section;
   }
 }
