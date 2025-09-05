@@ -1,5 +1,5 @@
 // src/app/products/components/list-products/app-products/app-products.component.ts
-import { Component, input, output, signal, computed } from "@angular/core";
+import { Component, input, output, signal, computed, ChangeDetectionStrategy } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { Router } from "@angular/router";
 import { Product } from "../../../../shared/interfaces/product.interface";
@@ -10,7 +10,8 @@ import { ProductCardComponent } from "../../../../shared/components/ui/product-c
   selector: 'app-products-component',
   templateUrl: './app-products.component.html',
   standalone: true,
-  imports: [CommonModule, ProductCardComponent] // Agregar ProductCardComponent
+  imports: [CommonModule, ProductCardComponent], // Agregar ProductCardComponent
+  changeDetection: ChangeDetectionStrategy.OnPush 
 })
 export class AppProductsComponent {
   

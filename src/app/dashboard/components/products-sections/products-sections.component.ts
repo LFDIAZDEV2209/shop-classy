@@ -1,4 +1,4 @@
-import { Component, computed, signal } from "@angular/core";
+import { ChangeDetectionStrategy, Component, computed, signal } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { ProductCardComponent } from "../../../shared/components/ui/product-card/product-card.component";
 import { LucideAngularModule, Shield, Crown, Gem, Star } from "lucide-angular";
@@ -11,7 +11,8 @@ import { Router } from "@angular/router";
   selector: 'products-sections',
   templateUrl: './products-sections.component.html',
   imports: [CommonModule, ProductCardComponent, LucideAngularModule],
-  standalone: true
+  standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProductsSectionsComponent {
   

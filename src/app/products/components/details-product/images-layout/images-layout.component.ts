@@ -1,11 +1,12 @@
 import { CommonModule } from "@angular/common";
-import { Component, Input, signal, OnChanges, SimpleChanges } from "@angular/core";
+import { Component, Input, signal, OnChanges, SimpleChanges, ChangeDetectionStrategy } from "@angular/core";
 
 @Component({
   selector: 'images-layout',
   templateUrl: './images-layout.component.html',
   standalone: true,
-  imports: [CommonModule]
+  imports: [CommonModule],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
     
 export class ImagesLayoutComponent implements OnChanges {

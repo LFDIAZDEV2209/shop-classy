@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, ChangeDetectionStrategy } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { Router, RouterModule } from "@angular/router";
 
@@ -7,6 +7,7 @@ import { Router, RouterModule } from "@angular/router";
   templateUrl: './dashboard-banner.component.html',
   standalone: true,
   imports: [CommonModule, RouterModule],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class DashboardBannerComponent {

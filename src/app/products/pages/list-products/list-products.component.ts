@@ -1,5 +1,5 @@
 // src/app/products/pages/list-products/list-products.component.ts
-import { Component, signal, computed } from "@angular/core";
+import { Component, signal, computed, ChangeDetectionStrategy } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { FilterProductsComponent, FilterState } from "../../components/list-products/filter-products/filter-products.component";
 import { AppProductsComponent } from "../../components/list-products/app-products/app-products.component";
@@ -12,7 +12,8 @@ import { LucideAngularModule, ArrowLeft } from "lucide-angular";
   selector: 'list-products',
   templateUrl: './list-products.component.html',
   standalone: true,
-  imports: [CommonModule, FilterProductsComponent, AppProductsComponent, LucideAngularModule]
+  imports: [CommonModule, FilterProductsComponent, AppProductsComponent, LucideAngularModule],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ListProductsComponent {
   readonly ArrowLeft = ArrowLeft;

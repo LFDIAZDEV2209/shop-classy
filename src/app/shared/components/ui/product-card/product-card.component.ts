@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { ChangeDetectionStrategy, Component, Input, ElementRef, ViewChild, AfterViewInit, OnDestroy, signal } from "@angular/core";
+import { ChangeDetectionStrategy, Component, Input, ElementRef, ViewChild, AfterViewInit, OnDestroy, signal, computed } from "@angular/core";
 import { Product } from "../../../interfaces/product.interface";
 import { LucideAngularModule, Star, Gem, Crown, Shield } from "lucide-angular";
 import { Router } from "@angular/router";
@@ -77,4 +77,11 @@ export class ProductCardComponent implements AfterViewInit, OnDestroy {
     if (!this.product.originalPrice || this.product.originalPrice <= this.product.price) return 0;
     return Math.round(((this.product.originalPrice - this.product.price) / this.product.originalPrice) * 100);
   }
+
+  readonly imageSrc = computed(() => {
+    if (this.isImageInView() && !this.hasImageError()) {
+      return this.product.image;
+    }
+    return 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjNmNGY2Ii8+PC9zdmc+';
+  });
 }

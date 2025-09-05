@@ -1,4 +1,4 @@
-import { Component, input, computed, signal } from "@angular/core";
+import { Component, input, computed, signal, ChangeDetectionStrategy } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { CommentService } from "../../../services/comment.service";
 import { FormsModule } from "@angular/forms";
@@ -7,7 +7,8 @@ import { FormsModule } from "@angular/forms";
   selector: 'comments-component',
   templateUrl: './comments.component.html',
   imports: [CommonModule, FormsModule],
-  standalone: true
+  standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CommentsComponent {
   // Input para recibir el ID del producto

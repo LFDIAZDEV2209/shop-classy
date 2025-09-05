@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { Component, OnInit, signal, computed } from "@angular/core";
+import { Component, OnInit, signal, computed, ChangeDetectionStrategy } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
 import { ImagesLayoutComponent } from "../../components/details-product/images-layout/images-layout.component";
 import { DetailsComponent } from "../../components/details-product/details/details.component";
@@ -12,7 +12,8 @@ import { CommentsComponent } from "../../components/details-product/comments/com
   selector: 'details-product',
   templateUrl: './details-product.component.html',
   standalone: true,
-  imports: [CommonModule, ImagesLayoutComponent, DetailsComponent, LucideAngularModule, CommentsComponent]
+  imports: [CommonModule, ImagesLayoutComponent, DetailsComponent, LucideAngularModule, CommentsComponent],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class DetailsProductComponent implements OnInit {

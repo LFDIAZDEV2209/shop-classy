@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { Component } from "@angular/core";
+import { Component, ChangeDetectionStrategy } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { LucideAngularModule, Gem } from "lucide-angular";
 import { Router } from "@angular/router";
@@ -8,7 +8,8 @@ import { Router } from "@angular/router";
   selector: 'app-footer',
   templateUrl: './footer.component.html',
   imports: [CommonModule, FormsModule, LucideAngularModule],
-  standalone: true
+  standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FooterComponent {
   readonly Gem = Gem;

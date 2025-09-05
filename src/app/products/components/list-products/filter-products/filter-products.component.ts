@@ -1,5 +1,5 @@
 // src/app/products/components/list-products/filter-products/filter-products.component.ts
-import { Component, input, output, signal } from "@angular/core";
+import { Component, input, output, signal, ChangeDetectionStrategy } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { LucideAngularModule, ChevronDown, Gem, Crown, Shield } from "lucide-angular";
 
@@ -19,7 +19,8 @@ export interface FilterState {
   selector: 'filter-products-component',
   templateUrl: './filter-products.component.html',
   standalone: true,
-  imports: [CommonModule, LucideAngularModule]
+  imports: [CommonModule, LucideAngularModule],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FilterProductsComponent {
   readonly ChevronDown = ChevronDown;

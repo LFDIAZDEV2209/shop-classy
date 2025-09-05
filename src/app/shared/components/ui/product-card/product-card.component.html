@@ -16,7 +16,7 @@
     <!-- Imagen real con lazy loading -->
     @if (isImageInView() && !hasImageError()) {
       <img 
-        [src]="product.image" 
+        [src]="imageSrc()" 
         [alt]="product.name"
         (load)="onImageLoad()"
         (error)="onImageError()"

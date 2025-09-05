@@ -1,4 +1,4 @@
-import { Component, computed, signal, OnInit, OnDestroy } from "@angular/core";
+import { Component, computed, signal, OnInit, ChangeDetectionStrategy } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { LucideAngularModule, Search, ShoppingCart, Menu, ChevronDown, User, Gem, X } from "lucide-angular";
 import { NavigationEnd, Router } from "@angular/router";
@@ -12,8 +12,9 @@ import { Product } from "../../../interfaces/product.interface";
   templateUrl: './navbar.component.html',
   standalone: true,
   imports: [CommonModule, LucideAngularModule],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NavbarComponent implements OnInit, OnDestroy {
+export class NavbarComponent implements OnInit {
   // ✅ Signals para estado del navbar
   readonly Search = Search;
   readonly ShoppingCart = ShoppingCart;
@@ -97,11 +98,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
       .subscribe(query => {
         this.performSearch(query);
       });
-  }
-
-  ngOnDestroy() {
-    window.removeEventListener('scroll', this.onScroll.bind(this));
-    this.searchSubject.complete();
   }
 
   private onScroll() {

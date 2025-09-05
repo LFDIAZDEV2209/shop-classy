@@ -1,19 +1,20 @@
 import { Routes } from '@angular/router';
-import { DashboardComponent } from './dashboard/pages/dashboard.component';
-import { DetailsProductComponent } from './products/pages/details-product/details-product.component';
-import { ListProductsComponent } from './products/pages/list-products/list-products.component';
 
 export const routes: Routes = [
   {
     path: '',
-    component: DashboardComponent
+    loadComponent: () => import('./dashboard/pages/dashboard.component').then(m => m.DashboardComponent)
   },
   {
     path: 'products/:id',
-    component: DetailsProductComponent
+    loadComponent: () => import('./products/pages/details-product/details-product.component').then(m => m.DetailsProductComponent)
   },
   {
     path: 'products',
-    component: ListProductsComponent
+    loadComponent: () => import('./products/pages/list-products/list-products.component').then(m => m.ListProductsComponent)
+  },
+  {
+    path: '**',
+    redirectTo: ''
   }
 ];

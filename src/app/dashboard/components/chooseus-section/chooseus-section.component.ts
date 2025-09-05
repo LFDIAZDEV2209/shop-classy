@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, ChangeDetectionStrategy } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { Router, RouterModule } from "@angular/router";
 
@@ -6,7 +6,8 @@ import { Router, RouterModule } from "@angular/router";
   selector: 'chooseus-section',
   templateUrl: './chooseus-section.component.html',
   imports: [CommonModule, RouterModule],
-  standalone: true
+  standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ChooseusSectionComponent {
   constructor(private router: Router) {}

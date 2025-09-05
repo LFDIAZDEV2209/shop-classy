@@ -1,4 +1,4 @@
-import { Component, signal, computed, input } from "@angular/core";
+import { Component, signal, computed, input, ChangeDetectionStrategy } from "@angular/core";
 import { ProductsService } from "../../../services/product.service";
 import { CommonModule } from "@angular/common";
 import { LucideAngularModule } from "lucide-angular";
@@ -8,7 +8,8 @@ import { Product } from "../../../../shared/interfaces/product.interface";
   selector: 'details-component',
   templateUrl: './details.component.html',
   standalone: true,
-  imports: [CommonModule, LucideAngularModule]
+  imports: [CommonModule, LucideAngularModule],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 // Versión optimizada - Enfoque híbrido
