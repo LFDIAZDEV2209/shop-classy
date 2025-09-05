@@ -5,15 +5,17 @@ import { FilterProductsComponent, FilterState } from "../../components/list-prod
 import { AppProductsComponent } from "../../components/list-products/app-products/app-products.component";
 import { ProductsService } from "../../services/product.service";
 import { Product } from "../../../shared/interfaces/product.interface";
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
+import { LucideAngularModule, ArrowLeft } from "lucide-angular";
 
 @Component({
   selector: 'list-products',
   templateUrl: './list-products.component.html',
   standalone: true,
-  imports: [CommonModule, FilterProductsComponent, AppProductsComponent]
+  imports: [CommonModule, FilterProductsComponent, AppProductsComponent, LucideAngularModule]
 })
 export class ListProductsComponent {
+  readonly ArrowLeft = ArrowLeft;
   // Signals para el estado
   readonly isLoading = signal(false);
   readonly currentFilters = signal<FilterState>({
@@ -33,6 +35,11 @@ export class ListProductsComponent {
       products = products.filter(p => p.category.toLowerCase() === filters.category);
     }
     
+    // Aplicar filtro de categoría de marca
+    if (filters.brandCategory !== 'all') {
+      products = products.filter(p => p.brandCategory === filters.brandCategory);
+    }
+    
     if (filters.price !== 'all') {
       products = products.filter(p => this.isInPriceRange(p.price, filters.price));
     }
@@ -47,7 +54,18 @@ export class ListProductsComponent {
   readonly totalProducts = computed(() => this.productsService.getAllProducts().length);
   readonly showingProducts = computed(() => this.filteredProducts().length);
   
-  constructor(private productsService: ProductsService, private router: Router) {}
+  constructor(private productsService: ProductsService, private router: Router, private route: ActivatedRoute) {}
+
+  ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+      const brandCategory = params['brandCategory'];
+
+      this.currentFilters.set({
+        ...this.currentFilters(),
+        brandCategory: brandCategory || 'all'
+      });
+    });
+  }
   
   // Método para manejar cambios de filtros
   onFilterChange(filters: FilterState) {
@@ -88,6 +106,6 @@ export class ListProductsComponent {
   }
 
   goBack() {
-    this.router.navigate(['']);
+    this.router.navigate(['/']);
   }
 }

@@ -33,6 +33,16 @@ export class ProductsSectionsComponent {
   readonly esmeraldaProducts = computed(() => this.productsService.esmeraldaProducts());
 
   onViewAll(section: string) {
-    this.router.navigate(['/products', section]);
+
+    const brandCategoryMap: { [key: string]: string } = {
+      tendencias: 'all',
+      diamante: 'diamante',
+      oro: 'oro',
+      esmeralda: 'esmeralda'
+    }
+
+    const brandCategory = brandCategoryMap[section] || 'all';
+
+    this.router.navigate(['/products'], { queryParams: { brandCategory: brandCategory } });
   }
 }

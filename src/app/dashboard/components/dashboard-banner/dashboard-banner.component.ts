@@ -1,44 +1,18 @@
 import { Component } from "@angular/core";
 import { CommonModule } from "@angular/common";
+import { Router, RouterModule } from "@angular/router";
 
 @Component({
   selector: 'dashboard-banner',
   templateUrl: './dashboard-banner.component.html',
   standalone: true,
-  imports: [CommonModule]
+  imports: [CommonModule, RouterModule],
 })
 
 export class DashboardBannerComponent {
-    products = [
-        {
-          name: 'Premium Facial Care Collection',
-          position: 'top-left',
-          rotation: 'rotate-6'
-        },
-        {
-          name: 'Gentle Cleanser',
-          position: 'bottom-left',
-          rotation: '-rotate-3'
-        },
-        {
-          name: 'Anti-aging Night Cream',
-          position: 'middle-right',
-          rotation: 'rotate-4'
-        },
-        {
-          name: 'Hydrating Serum',
-          position: 'top-right',
-          rotation: '-rotate-5'
-        },
-        {
-          name: 'Vitamin C Brightening Mask',
-          position: 'bottom-right',
-          rotation: 'rotate-3'
-        }
-      ];
-    
+  constructor(private router: Router) {}
       onViewProducts() {
-        // Navegar a la página de productos
-        console.log('Ver productos clicked');
-      }
+    // Navegar a la página de productos
+    this.router.navigate(['/products']);
+  }
 }

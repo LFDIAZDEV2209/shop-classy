@@ -76,6 +76,6 @@ export class DetailsProductComponent implements OnInit {
   }
 
   goBack() {
-    this.router.navigate(['/']);
+    this.router.navigate(['/products']);
   }
 }

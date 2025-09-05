@@ -4,11 +4,35 @@
   class="bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer group overflow-hidden flex flex-col h-full">
   
   <!-- Imagen del producto -->
-  <div class="relative aspect-square overflow-hidden">
-    <img 
-      [src]="product.image" 
-      [alt]="product.name"
-      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+  <div #imageContainer class="relative aspect-square overflow-hidden">
+    
+    <!-- Placeholder/Skeleton mientras carga -->
+    @if (!isImageInView() || (!isImageLoaded() && !hasImageError())) {
+      <div class="w-full h-full bg-gray-200 animate-pulse flex items-center justify-center">
+        <div class="w-12 h-12 bg-gray-300 rounded-full"></div>
+      </div>
+    }
+    
+    <!-- Imagen real con lazy loading -->
+    @if (isImageInView() && !hasImageError()) {
+      <img 
+        [src]="product.image" 
+        [alt]="product.name"
+        (load)="onImageLoad()"
+        (error)="onImageError()"
+        [class]="'w-full h-full object-cover group-hover:scale-105 transition-transform duration-300' + (isImageLoaded() ? ' opacity-100' : ' opacity-0')"
+        loading="lazy">
+    }
+    
+    <!-- Imagen de error/fallback -->
+    @if (hasImageError()) {
+      <div class="w-full h-full bg-gray-100 flex items-center justify-center">
+        <div class="text-center text-gray-400">
+          <div class="text-4xl mb-2">📷</div>
+          <div class="text-sm">Error al cargar</div>
+        </div>
+      </div>
+    }
     
     <!-- Badge de tendencia -->
     @if (product.isTrend) {

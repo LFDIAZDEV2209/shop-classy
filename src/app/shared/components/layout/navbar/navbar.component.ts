@@ -1,4 +1,4 @@
-import { Component, computed, signal } from "@angular/core";
+import { Component, computed, signal, OnInit, OnDestroy } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { LucideAngularModule, Search, ShoppingCart, Menu, ChevronDown, User, Gem } from "lucide-angular";
 import { NavigationEnd, Router } from "@angular/router";
@@ -10,7 +10,7 @@ import { filter } from "rxjs";
   standalone: true,
   imports: [CommonModule, LucideAngularModule],
 })
-export class NavbarComponent {
+export class NavbarComponent implements OnInit, OnDestroy {
   // ✅ Signals para estado del navbar
   readonly Search = Search;
   readonly ShoppingCart = ShoppingCart;
@@ -80,5 +80,16 @@ export class NavbarComponent {
 
   updateCartCount(count: number) {
     this.cartItemsCount.set(count);
+  }
+
+  goToHome() {
+    this.router.navigate(['/']);
+  }
+
+  onScrollDown() {
+    window.scrollTo({
+      top: document.documentElement.scrollHeight,
+      behavior: 'smooth'
+    });
   }
 }

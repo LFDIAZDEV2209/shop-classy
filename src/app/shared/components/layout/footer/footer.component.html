@@ -7,9 +7,9 @@
         <!-- Column 1: ShopClassy Information -->
         <div class="lg:col-span-1">
           <!-- Logo -->
-          <div class="flex items-center mb-4">
-            <div class="w-8 h-8 bg-pink-500 transform rotate-45 mr-3"></div>
-            <span class="text-2xl font-bold text-pink-400">ShopClassy</span>
+          <div class="flex items-center mb-4 cursor-pointer" (click)="goToHome()">
+              <lucide-angular [img]="Gem" class="w-5 h-5 text-pink-400 mr-3" />
+            <span class="text-2xl font-bold hover:text-pink-400 transition-colors duration-300">ShopClassy</span>
           </div>
           
           <!-- Description -->
@@ -114,7 +114,7 @@
         <div class="flex flex-col md:flex-row justify-between items-center">
           <!-- Copyright -->
           <div class="text-gray-300 mb-4 md:mb-0">
-            © 2024 ShopClassy. Todos los derechos reservados.
+            © 2025 ShopClassy. Todos los derechos reservados.
           </div>
           
           <!-- Policy Links -->
