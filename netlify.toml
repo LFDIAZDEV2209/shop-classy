@@ -1,9 +1,10 @@
 [build]
-  command = "npm run build"
+  command = "chmod +x netlify-build.sh && ./netlify-build.sh"
   publish = "dist/shop-classy/browser"
 
 [build.environment]
   NODE_VERSION = "20"
+  NPM_FLAGS = "--legacy-peer-deps"
 
 [[redirects]]
   from = "/*"
@@ -14,3 +15,15 @@
   command = "npm start"
   port = 4200
   publish = "dist/shop-classy/browser"
+
+# Configuración específica para Angular
+[build.processing]
+  skip_processing = false
+
+[build.processing.css]
+  bundle = true
+  minify = true
+
+[build.processing.js]
+  bundle = true
+  minify = true
