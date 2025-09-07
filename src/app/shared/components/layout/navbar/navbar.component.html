@@ -95,7 +95,11 @@
         </button>
 
         <!-- Shopping Cart Icon with Badge -->
-        <button class="transition-colors duration-200 relative" [class]="textClasses()" data-cart-icon>
+        <button 
+          (click)="openCart()"
+          class="transition-colors duration-200 relative" 
+          [class]="textClasses()" 
+          data-cart-icon>
           <lucide-angular [img]="ShoppingCart" class="w-6 h-6" />
           <!-- Cart Badge - Reactivo -->
           @if (cartService.totalUniqueProducts() > 0) {
@@ -157,3 +161,9 @@
     }
   </div>
 </nav>
+
+<!-- Sidebar del carrito -->
+<shopping-cart 
+  [isOpen]="isCartOpen()" 
+  (cartClosed)="closeCart()">
+</shopping-cart>

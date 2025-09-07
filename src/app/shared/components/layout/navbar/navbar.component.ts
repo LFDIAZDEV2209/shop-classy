@@ -7,12 +7,13 @@ import { Subject } from "rxjs";
 import { ProductsService } from "../../../../products/services/product.service";
 import { Product } from "../../../interfaces/product.interface";
 import { CartService } from "../../../services/cart.service";
+import { ShoppingCartComponent } from "../shoping-cart/shoping-cart.component";
 
 @Component({
   selector: 'navbar',
   templateUrl: './navbar.component.html',
   standalone: true,
-  imports: [CommonModule, LucideAngularModule],
+  imports: [CommonModule, LucideAngularModule, ShoppingCartComponent],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NavbarComponent implements OnInit {
@@ -36,6 +37,22 @@ export class NavbarComponent implements OnInit {
   readonly isSearching = signal(false);
   readonly isSearchClosing = signal(false);
   private searchSubject = new Subject<string>();
+
+  // ✅ Signal para el sidebar del carrito
+  readonly isCartOpen = signal(false);
+
+  // Metodo para abrir el sidebar del carrito
+  openCart() {
+    this.isCartOpen.set(true);
+    // Prevenir scroll del body
+    document.body.style.overflow = 'hidden';
+  }
+  // Metodo para cerrar el sidebar del carrito
+  closeCart() {
+    this.isCartOpen.set(false);
+    // Restaurar scroll del body
+    document.body.style.overflow = 'auto';
+  }
 
   // ✅ Computed para clases dinámicas
   readonly navbarClasses = computed(() => {
